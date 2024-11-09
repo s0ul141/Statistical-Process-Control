@@ -1,0 +1,56 @@
+\documentclass{article}
+
+\begin{document}
+
+\textbf{Title- Mean Chart and Range Chart}\\
+\textbf{Exercise No. 1}\\
+\textbf{Reg No.} : 23MDT0047\\
+\textbf{Date} : November 9, 2024 \\
+\textbf{Aim} : To Check Mean chart and Range Chart of the Paper Data \\
+\textbf{Data Description} : Paper Data. It consists of two columns - X and S.No\\
+
+
+<<>>=
+suppressWarnings(suppressPackageStartupMessages(library(qcr)))
+library(readxl)
+paper_data <- read_excel("paper_data.xlsx")
+#converstion for excel data
+df = data.frame(paper_data)
+paper_data.qcd<- qcd(df)
+class(paper_data.qcd)
+res_pd.qcs <- qcs.xbar(paper_data.qcd)
+res_pd.qcs
+plot(res_pd.qcs, title = "Control Xbar chart for Paper data")
+@
+<<>>=
+# Range Chart
+res_pd.r <- qcs.R(paper_data.qcd)
+res_pd.r
+plot(res_pd.r, title = "Control Range chart for Paper data")
+@
+\textbf{Title- Mean Chart and Range Chart}\\
+\textbf{Exercise No. 2}\\
+\textbf{Reg No.} : 23MDT0047\\
+\textbf{Date} : November 9, 2024 \\
+\textbf{Aim} : To Check Mean chart and Range Chart of the Paper Data \\
+\textbf{Data Description} : Data 1. It consists of two columns - X and S.No\\
+
+<<>>=
+#Mean Chart
+data_1 <- read_excel("data1.xlsx")
+#converstion for excel data
+df1 = data.frame(data_1)
+data_1.qcd<- qcd(df1)
+class(data_1.qcd)
+res1_pd.qcs <- qcs.xbar(data_1.qcd)
+res1_pd.qcs
+plot(res1_pd.qcs, title = "Control Xbar chart for data 1")
+@
+<<>>=
+#Range Chart
+res2_pd.r <- qcs.R(data_1.qcd)
+res2_pd.r
+plot(res2_pd.r, title = "Control Range chart for data 1")
+@
+
+\end{document}
