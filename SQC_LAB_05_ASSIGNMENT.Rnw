@@ -1,0 +1,66 @@
+\documentclass{article}
+
+\begin{document}
+
+\subparagraph{\\Name : Junsume Das}
+\textbf{\\Register Number : 23MDT0048}
+\textbf{\\Slot  details : L21+L22}
+\textbf{\\Course Code and Course Title :}
+\textbf{MAT6011 (Statistical Quality Control LAB - ELA)}
+
+\subparagraph{\\Title- 6-Sigma Structure (DMAC Structure)}
+\textbf{\\LAB Assignment Number: 05}
+\textbf{\\Exercise No. 1}
+\textbf{\\Date} : November 10, 2024 
+\textbf{\\Aim} : Optimize pizza-making process for consistent quality, efficiency, and customer satisfaction using DMAC framework. 
+\textbf{\\Data Description} : Data tracks pizza ingredients, preparation steps, cooking parameters, and quality output metrics.
+
+
+<<>>=
+library("SixSigma")
+
+
+# Create vector of Input, Output and Steps
+inputs <- c("Ingredients","Cook","Oven")
+inputs
+outputs<-c("temperature",'taste','tenderness','weight',
+           'radius','time')
+outputs
+steps<- c("DOUGH",'TOPPINGS','BAKE','DELIVER')
+steps
+
+# Save the names of the outputs of each step in lists
+io <-list()
+io[[1]]<-list("X's")
+io[[2]]<-list("Dough","ingredients","Cooker")
+io[[3]]<-list("Raw Pizza","Cooker","Oven Plate")
+io[[4]]<-list("Baked Pizza","Plate")
+io
+
+# Save the names, parameter types, and features
+param<- list()
+param[[1]]<-list(c("Cook","C"),c("flour band","C"),
+                 c("prop Water","P"))
+param[[2]]<-list(c("Cook","C"),c("Ing.Brand","Cr"),
+                 c("amount","P"),
+                 c("prep.Time","Cr"))
+param[[3]]<-list(c("Cook","C"),c("queue","N"),
+                 c("BakeTime","Cr"))
+param[[4]]<-list(c("Waiter","C"),c("queue","N"))
+param
+
+feat<-list()
+feat[[1]]<-list("Density","toughness","thickness")
+feat[[2]]<-list("Daimeter","Weight","thickness")
+feat[[3]]<-list("temperature","tenderness","taste")
+feat[[4]]<-list("temperature","taste","tenderness",
+                "weight","time")
+feat
+
+ss.pMap(steps,inputs,outputs,io,param,feat,sub="Pizza Process Example")
+@
+
+\subparagraph{\\Conclusion:}
+The Six Sigma process is a powerful methodology aimed at improving quality and efficiency in various operational processes. By utilizing the DMAC (Define, Measure, Analyze, Control) framework, organizations can systematically identify and eliminate defects, leading to enhanced customer satisfaction and reduced operational costs. The structured approach of Six Sigma facilitates data-driven decision-making, allowing teams to focus on critical inputs and outputs that significantly impact quality. In the context of the pizza-making process, the application of Six Sigma principles not only optimizes ingredient usage and cooking parameters but also ensures a consistent product that meets customer expectations. Ultimately, the Six Sigma process fosters a culture of continuous improvement, empowering organizations to achieve excellence in their operations.
+
+\end{document}
