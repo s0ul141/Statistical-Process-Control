@@ -30,9 +30,6 @@ s <- qcc(df1, type = "S", nsigmas = 3, plot = FALSE)
 par(mar = c(5, 4, 4, 2))  # Adjust values as needed
 plot(s)  # Try plotting again
 
-range(df1)
-process.capability(q1, spec.limits = c(4445,5595))
-process.capability(q1, spec.limits = c(4445,5595), target=5000)
 
 @
 \textbf {Conclusion:} \\
@@ -64,9 +61,6 @@ s2 <- qcc(df2, type = "S", nsigmas = 3, plot = FALSE)
 par(mar = c(5, 4, 4, 2))  # Adjust values as needed
 plot(s2)  # Try plotting again
 
-range(df2)
-process.capability(q2, spec.limits = c(54, 65))
-process.capability(q2, spec.limits = c(54, 65), target=58)
 @
 \textbf {Conclusion:} \\
 From the X-bar chart, it is evident that all processes are within control. \\
