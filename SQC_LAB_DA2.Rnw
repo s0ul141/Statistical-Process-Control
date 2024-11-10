@@ -5,47 +5,71 @@
 \textbf{Title- Mean Chart and Sigma Chart}\\
 \textbf{Exercise No. 1}\\
 \textbf{Reg No.} : 23MDT0047\\
-\textbf{Date} : November 9, 2024 \\
-\textbf{Aim} : To Check Mean chart and Sigma Chart of the AIRSv7vs2007-2016 Data \\
-\textbf{Data Description} : Paper Data. It consists of two columns - X and S.No\\
+\textbf{Date} : November 10, 2024 \\
+\textbf{Aim} : To Check Mean chart and Sigma Chart of the Paper Data \\
+\textbf{Data Description} : Paper Data. It consists of two columns - X and 
+S.No \\
 
 <<>>=
 library(qcc)
 library(readxl)
 
-data1 <- read_excel("D:Music/SQC/AIRSv7vs2007-2016.xlsx")
-data1 <- qcc.groups(data1$Temperature, data1$Year)
+### USE THIS LINE OF CODE WHILE EXECUTING LINE BY LINE
+#df1 <- read_excel("D:Music/SQC/paper_data.xlsx")
 
-View(data1)
-q2<- qcc(data1, type='xbar', nsigmas=3, plot=TRUE)
-q2
+### USE THIS LINE OF CODE WHILE MAKING PDF
+df1 <- read_excel("paper_data.xlsx")
+df1 <- qcc.groups(df1$X, df1$S.No)
 
+q1<- qcc(df1, type='xbar', nsigmas=3, plot=TRUE)
+q1
 
-s <- qcc(data1, type = "S", nsigmas = 3, plot = FALSE)
+s <- qcc(df1, type = "S", nsigmas = 3, plot = FALSE)
 
 # Set smaller margins
 par(mar = c(5, 4, 4, 2))  # Adjust values as needed
 plot(s)  # Try plotting again
 
-range(data2)
-process.capability(q2, spec.limits = c(-0.41,0.64))
-process.capability(q2, spec.limits = c(-0.41,0.64), taregt=0.1)
-process.capability(q2, spec.limits = c(-0.41,0.64))
+range(df1)
+process.capability(q1, spec.limits = c(4445,5595))
+process.capability(q1, spec.limits = c(4445,5595), target=5000)
+
 @
 \textbf {Conclusion:} \\
 From the X-bar chart, it is evident that all processes are within control. \\
-From the Sigma chart, it is evident that all processes are within control. \\
+From the Sigma chart, it is evident that all processes are within control.  \\
 ------------------------------------------------------------------------------ \\
 \textbf{Title- Mean Chart and Sigma Chart}\\
 \textbf{Exercise No. 2}\\
 \textbf{Reg No.} : 23MDT0047\\
-\textbf{Date} : November 9, 2024 \\
-\textbf{Aim} : To Check Mean chart and Sigma Chart of the Data 2 \\
-\textbf{Data Description} : Data 2. It consists of two columns - X and S.No\\
+\textbf{Date} : November 10, 2024 \\
+\textbf{Aim} : To Check Mean chart and Sigma Chart of the Data 1 \\
+\textbf{Data Description} : Data 1. It consists of two columns - X and S.No\\
 
 <<>>=
+### USE THIS LINE OF CODE WHILE EXECUTING LINE BY LINE
+#df2 <- read_excel("D:Music/SQC/data1.xlsx")
 
+### USE THIS LINE OF CODE WHILE MAKING PDF
+df2 <- read_excel("data1.xlsx")
+
+df2 <- qcc.groups(df2$X, df2$S.No)
+
+q2<- qcc(df2, type='xbar', nsigmas=3, plot=TRUE)
+q2
+
+s2 <- qcc(df2, type = "S", nsigmas = 3, plot = FALSE)
+
+# Set smaller margins
+par(mar = c(5, 4, 4, 2))  # Adjust values as needed
+plot(s2)  # Try plotting again
+
+range(df2)
+process.capability(q2, spec.limits = c(54, 65))
+process.capability(q2, spec.limits = c(54, 65), target=58)
 @
-
+\textbf {Conclusion:} \\
+From the X-bar chart, it is evident that all processes are within control. \\
+From the Sigma chart, it is evident that all processes are within control.  \\
 
 \end{document}
