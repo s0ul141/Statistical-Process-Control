@@ -1,0 +1,89 @@
+\documentclass{article}
+
+\begin{document}
+
+\textbf{Title: Acceptance Sampling and Quality Control}\\
+\textbf{Exercise No. 1}\\
+\textbf{Reg No.} : 23MDT0047\\
+\textbf{Date} : November 10, 2024 \\
+
+\textbf{Aim} : To study Acceptance Sampling using Single Sampling Plan, Double Sampling Plan, and to understand OC Curve and AOQ for different distributions. \\
+
+\textbf{Data Description} : This exercise will cover three different distributions: Binomial, Poisson, and Normal. \\
+
+\section*{1. Single Sampling Plan}
+A single sampling plan involves taking a single sample from a lot and deciding whether to accept or reject the lot based on the number of defective items found in the sample.
+
+\textbf{Example:} \\
+Let’s assume we have a lot of 1000 items, and we decide to take a sample of 50 items. If we find 3 or fewer defective items, we accept the lot; otherwise, we reject it.
+
+\textbf{Acceptance Number (c)}: 3 \\
+\textbf{Sample Size (n)}: 50 \\
+
+\textbf{OC Curve}: The OC curve can be plotted to show the probability of accepting the lot against the proportion of defectives in the lot.
+
+<<echo=FALSE, results='asis'>>=
+# R code to plot OC Curve for Binomial Distribution
+library(ggplot2)
+
+n <- 50
+c <- 3
+p <- seq(0, 0.1, by = 0.01)
+accept_prob <- pbinom(c, n, p)
+
+df <- data.frame(p, accept_prob)
+
+ggplot(df, aes(x = p, y = accept_prob)) +
+  geom_line() +
+  labs(title = "Operating Characteristic (OC) Curve",
+       x = "Proportion of Defectives (p)",
+       y = "Probability of Acceptance")
+@
+
+\section*{2. Double Sampling Plan}
+A double sampling plan is an extension of the single sampling plan where if the first sample is inconclusive, a second sample is taken.
+
+\textbf{Example:} \\
+Assume we take a first sample of 50 items. If we find 2 or fewer defectives, we accept the lot. If we find 4 or more, we reject it. If we find 3 defectives, we take a second sample of 50 items. If the total number of defectives in both samples is 5 or fewer, we accept the lot.
+
+\textbf{Acceptance Number (c1)}: 2 (for first sample) \\
+\textbf{Acceptance Number (c2)}: 5 (for total) \\
+
+\section*{3. Average Outgoing Quality (AOQ)}
+AOQ is the average quality of outgoing products after inspection. It can be calculated for different distributions.
+
+\textbf{For Binomial Distribution:} \\
+Let \( p \) be the fraction defective in the lot. The AOQ can be calculated as:
+\[
+AOQ = p \cdot (1 - P(A))
+\]
+where \( P(A) \) is the probability of acceptance.
+
+\textbf{For Poisson Distribution:} \\
+Assuming a Poisson distribution with mean \( \lambda \):
+\[
+AOQ = \lambda \cdot (1 - P(A))
+\]
+
+\textbf{For Normal Distribution:} \\
+For a normal distribution, we can use the Z-score to calculate probabilities and subsequently find AOQ.
+
+\textbf{Example for AOQ Calculation:}
+<<echo=FALSE>>=
+# R code to calculate AOQ for Binomial Distribution
+n <- 50
+p <- 0.05
+c <- 3
+
+# Probability of acceptance
+P_accept <- sum(dbinom(0:c, size = n, prob = p))
+
+# AOQ calculation
+AOQ <- p * (1 - P_accept)
+AOQ
+@
+
+\section*{Conclusion}
+In this exercise, we explored acceptance sampling techniques including single and double sampling plans. We also examined the Operating Characteristic curve and Average Outgoing Quality for different distributions (Binomial, Poisson, and Normal). Understanding these concepts is crucial for effective quality control in manufacturing and service industries.
+
+\end{document}
