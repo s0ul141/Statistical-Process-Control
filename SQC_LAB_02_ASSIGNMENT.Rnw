@@ -1,0 +1,100 @@
+\documentclass{article}
+
+\begin{document}
+
+\subparagraph{\\Name : Ritik Sharma}
+\textbf{\\Register Number : 23MDT0029}
+\textbf{\\Slot  details : L21+L22}
+\textbf{\\Course Code and Course Title :}
+\textbf{MAT6011 (Statistical Quality Control LAB - ELA)}
+
+\subparagraph{\\Title- Mean Chart and Sigma Chart}
+\textbf{\\LAB Assignment Number: 02}
+\textbf{\\Exercise No. 1}
+\textbf{\\Date} : November 10, 2024 
+\textbf{\\Aim} : Construct the mean and Sigma chart for the Product Width Data. 
+\textbf{\\Data Description} : Product Width Data. It consists of two columns - X and Time Period.
+
+<<>>=
+# Mean Chart for Product Width Data
+suppressWarnings(suppressPackageStartupMessages(library(qcr)))
+library(readxl)
+if (!requireNamespace("readxl", quietly = TRUE)) {
+  install.packages("readxl")
+}
+library(readxl)
+if (!requireNamespace("qcc", quietly = TRUE)) {
+  install.packages("qcc")
+}
+library(qcc)
+
+data <- read_excel("C:/Users/sharm/Downloads/Product Width.xlsx")
+df = data.frame(data)
+data.qcd <- qcd(df)
+data.qcd
+shapiro.test(data.qcd$x)
+class(data.qcd)
+res.qcs <- qcs.xbar(data.qcd)
+res.qcs
+plot(res.qcs, title = "Control chart Xbar for Product Width data")
+summary(res.qcs)
+
+
+# Sigma Chart for Product Width Data
+data.qcd<- qcd(df)
+shapiro.test(data.qcd$x)
+class(data.qcd)
+res.qcs <- qcs.S(data.qcd)
+res.qcs
+plot(res.qcs, title = "Control chart Sigma for Product Width data")
+summary(res.qcs)
+@
+
+\subparagraph{\\Conclusion for Product Width data:- Mean Chart and Sigma Chart}
+\textbf{\\1. Mean Chart} : The graph for the mean chart for the given 
+Product Width data has been drawn. All points lie within the control 
+limits, indicating that the process is under control. Although there are slight deviations around the central limit, these variations are 
+expected in normal process behavior.
+
+\textbf{\\2. Sigma Chart} : The graph for the Sigma chart for the given Product Width data has been drawn. All points are within the control 
+limits, signifying that the process is stable and in control. There are no points that fall outside the control limits. Although there are some variation around the central control limit.
+
+\subparagraph{\\Title- Mean Chart and Sigma Chart}
+\textbf{\\Exercise No. 2}
+\textbf{\\Date} : November 10, 2024 
+\textbf{\\Aim} : Estimate the mean and Sigma process for the paper production.  
+\textbf{\\Data Description} : Paper Production Data. It consists of two columns - X and Days.
+
+
+<<>>=
+# Mean Chart for  Paper Production Data
+data1 <- read_excel("C:/Users/sharm/Downloads/Paper Production Data.xlsx")
+df1 = data.frame(data1)
+data1.qcd<- qcd(df1)
+data1.qcd
+shapiro.test(data1.qcd$x)
+class(data1.qcd)
+res.qcs <- qcs.xbar(data1.qcd)
+res.qcs
+plot(res.qcs, title = "Control chart Xbar for Paper Production Data")
+summary(res.qcs)
+
+
+# Sigma Chart for Paper Production Data
+data1.qcd<- qcd(df1)
+shapiro.test(data1.qcd$x)
+class(data1.qcd)
+res.qcs <- qcs.S(data1.qcd)
+res.qcs
+plot(res.qcs, title = "Control chart Sigma for Paper Production Data")
+summary(res.qcs)
+@
+
+\subparagraph{\\Conclusion for Paper Production Data:- Mean Chart and Sigma Chart}
+\textbf{\\1. Mean Chart} : The graph for the mean chart for the given paper
+production data has been drawn. All points lie within the control limits, indicating that the process is under control. Although there are slight deviations around the central limit, these variations are expected in 
+normal process behavior and do not indicate any issues with the stability of the process.
+
+\textbf{\\2. Sigma Chart} : The graph for the Sigma chart for the given paper
+production data has been drawn. All points are within the control limits, signifying that the process is stable and in control. There are no points that fall outside the control limits, although minor deviations around the central limit are present, which are typical in any standard process.
+\end{document}
