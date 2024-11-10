@@ -1,0 +1,43 @@
+\documentclass{article}
+
+\begin{document}
+
+\textbf{Title- Mean Chart, Process Capability, and CUSUM Chart}\\
+\textbf{Exercise No. 1}\\
+\textbf{Name} : Junsume Das\\
+\textbf{Reg No.} : 23MDT0048\\
+\textbf{Date} : November 10, 2024 \\
+\textbf{Aim} : To Check Mean Chart, Process Capability, and CUSUM Chart of the Data\\
+\textbf{Data Description} : Data. It consists of two columns - X and S.No\\
+
+<<>>=
+library(qcc)
+library(readxl)
+
+data3 <- read_excel("C:/Users/junsu/Downloads/VIT Downloads/MAT6011-Statistical Quality Control/data1.xlsx")
+data3_grouped <- qcc.groups(data3$X, data3$S.No)
+
+range <- range(data3_grouped)
+cat("The range of the data is:", data_range, "\n")
+# print(range(d))
+
+# Mean Chart
+mean_chart <- qcc(data3_grouped, type='xbar', nsigmas=3, plot=TRUE)
+
+lower_limit <- 61
+upper_limit <- 63
+target_value <- 62
+# Process Capability
+process.capability(mean_chart, spec.limits=c(lower_limit, upper_limit), target=target_value)
+
+# CUSUM Chart
+cusum_chart <- cusum(data3_grouped, decision.interval=3, target=target_value)
+plot(cusum_chart)
+@
+
+\textbf{Conclusion:} \\
+From the Mean chart, it is evident that all processes are within control. \\
+From the Process Capability analysis, the process capability indices indicate that the process is capable of meeting specifications. \\
+From the CUSUM chart, it is evident that the process remains stable over time.
+
+\end{document}
