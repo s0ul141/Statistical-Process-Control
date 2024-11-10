@@ -28,6 +28,10 @@ res_pd.r <- qcs.R(paper_data.qcd)
 res_pd.r
 plot(res_pd.r, title = "Control Range chart for Paper data")
 @
+\textbf {Conclusion:} \\
+From the X-bar chart, it is evident that all processes are within control. \\
+From the Range chart, it is evident that all processes are within control. \\
+------------------------------------------------------------------------------ \\
 \textbf{Title- Mean Chart and Range Chart}\\
 \textbf{Exercise No. 2}\\
 \textbf{Reg No.} : 23MDT0047\\
@@ -52,5 +56,10 @@ res2_pd.r <- qcs.R(data_1.qcd)
 res2_pd.r
 plot(res2_pd.r, title = "Control Range chart for data 1")
 @
+
+\textbf {Conclusion:} \\
+From the X-bar chart, it is evident that all processes are within control. \\
+From the Range chart, it is evident that all processes are within control. \\
+============================================================================== \\
 
 \end{document}
