@@ -2,7 +2,50 @@
 
 \begin{document}
 
+\textbf{Title- Mean Chart and Sigma Chart}\\
+\textbf{Exercise No. 1}\\
+\textbf{Reg No.} : 23MDT0047\\
+\textbf{Date} : November 9, 2024 \\
+\textbf{Aim} : To Check Mean chart and Sigma Chart of the AIRSv7vs2007-2016 Data \\
+\textbf{Data Description} : Paper Data. It consists of two columns - X and S.No\\
 
+<<>>=
+library(qcc)
+library(readxl)
+
+data1 <- read_excel("D:Music/SQC/AIRSv7vs2007-2016.xlsx")
+data1 <- qcc.groups(data1$Temperature, data1$Year)
+
+View(data1)
+q2<- qcc(data1, type='xbar', nsigmas=3, plot=TRUE)
+q2
+
+
+s <- qcc(data1, type = "S", nsigmas = 3, plot = FALSE)
+
+# Set smaller margins
+par(mar = c(5, 4, 4, 2))  # Adjust values as needed
+plot(s)  # Try plotting again
+
+range(data2)
+process.capability(q2, spec.limits = c(-0.41,0.64))
+process.capability(q2, spec.limits = c(-0.41,0.64), taregt=0.1)
+process.capability(q2, spec.limits = c(-0.41,0.64))
+@
+\textbf {Conclusion:} \\
+From the X-bar chart, it is evident that all processes are within control. \\
+From the Sigma chart, it is evident that all processes are within control. \\
+------------------------------------------------------------------------------ \\
+\textbf{Title- Mean Chart and Sigma Chart}\\
+\textbf{Exercise No. 2}\\
+\textbf{Reg No.} : 23MDT0047\\
+\textbf{Date} : November 9, 2024 \\
+\textbf{Aim} : To Check Mean chart and Sigma Chart of the Data 2 \\
+\textbf{Data Description} : Data 2. It consists of two columns - X and S.No\\
+
+<<>>=
+
+@
 
 
 \end{document}
