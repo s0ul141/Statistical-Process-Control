@@ -11,26 +11,36 @@
 
 
 <<>>=
-suppressWarnings(suppressPackageStartupMessages(library(qcr)))
+library(qcc)
 library(readxl)
-paper_data <- read_excel("paper_data.xlsx")
-#converstion for excel data
-df = data.frame(paper_data)
-paper_data.qcd<- qcd(df)
-class(paper_data.qcd)
-res_pd.qcs <- qcs.xbar(paper_data.qcd)
-res_pd.qcs
-plot(res_pd.qcs, title = "Control Xbar chart for Paper data")
-@
-<<>>=
+
+### USE THIS LINE OF CODE WHILE EXECUTING LINE BY LINE
+#df1 <- read_excel("D:Music/SQC/paper_data.xlsx")
+
+### USE THIS LINE OF CODE WHILE MAKING PDF
+df1 <- read_excel("paper_data.xlsx")
+df1 <- qcc.groups(df1$X, df1$S.No)
+
+# X bar chart
+x1<- qcc(df1, type='xbar', nsigmas=3, plot=TRUE)
+x1
+
 # Range Chart
-res_pd.r <- qcs.R(paper_data.qcd)
-res_pd.r
-plot(res_pd.r, title = "Control Range chart for Paper data")
+r1 <- qcc(df1, type="R", nsigmas = 3, plot = TRUE)
+r1
+
+# Sigma Chart
+s1 <- qcc(df1, type = "S", nsigmas = 3, plot = FALSE)
+# Set smaller margins
+par(mar = c(5, 4, 4, 2))  # Adjust values as needed
+plot(s1)  # Try plotting again
+
+
 @
 \textbf {Conclusion:} \\
 From the X-bar chart, it is evident that all processes are within control. \\
 From the Range chart, it is evident that all processes are within control. \\
+From the Sigma chart, it is evident that all processes are within control. \\
 ------------------------------------------------------------------------------ \\
 \textbf{Title- Mean Chart and Range Chart}\\
 \textbf{Exercise No. 2}\\
@@ -40,26 +50,33 @@ From the Range chart, it is evident that all processes are within control. \\
 \textbf{Data Description} : Data 1. It consists of two columns - X and S.No\\
 
 <<>>=
-#Mean Chart
-data_1 <- read_excel("data1.xlsx")
-#converstion for excel data
-df1 = data.frame(data_1)
-data_1.qcd<- qcd(df1)
-class(data_1.qcd)
-res1_pd.qcs <- qcs.xbar(data_1.qcd)
-res1_pd.qcs
-plot(res1_pd.qcs, title = "Control Xbar chart for data 1")
-@
-<<>>=
-#Range Chart
-res2_pd.r <- qcs.R(data_1.qcd)
-res2_pd.r
-plot(res2_pd.r, title = "Control Range chart for data 1")
+
+#df2 <- read_excel("D:Music/SQC/data1.xlsx")
+
+### USE THIS LINE OF CODE WHILE MAKING PDF
+df2 <- read_excel("data1.xlsx")
+df2 <- qcc.groups(df2$X, df2$S.No)
+
+# X bar chart
+x2<- qcc(df2, type='xbar', nsigmas=3, plot=TRUE)
+x2
+
+# Range Chart
+r2 <- qcc(df2, type="R", nsigmas = 3, plot = TRUE)
+r2
+
+# Sigma Chart
+s2 <- qcc(df2, type = "S", nsigmas = 3, plot = FALSE)
+# Set smaller margins
+par(mar = c(5, 4, 4, 2))  # Adjust values as needed
+plot(s2)  # Try plotting again
+
 @
 
 \textbf {Conclusion:} \\
 From the X-bar chart, it is evident that all processes are within control. \\
 From the Range chart, it is evident that all processes are within control. \\
+From the Sigma chart, it is evident that all processes are within control. \\
 ============================================================================== \\
 
 \end{document}
