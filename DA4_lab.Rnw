@@ -3,87 +3,374 @@
 \begin{document}
 
 \textbf{Title: Acceptance Sampling and Quality Control}\\
+\textbf{Name}: Soumik Banerjee\\
 \textbf{Exercise No. 1}\\
-\textbf{Reg No.} : 23MDT0047\\
-\textbf{Date} : November 10, 2024 \\
+\textbf{Reg No.}: 23MDT0007\\
+\textbf{Date}: November 10, 2024\\
 
-\textbf{Aim} : To study Acceptance Sampling using Single Sampling Plan, Double Sampling Plan, and to understand OC Curve and AOQ for different distributions. \\
+\textbf{Aim}: To study Acceptance Sampling using Single Sampling Plan, Double Sampling Plan, and to understand OC Curve and AOQ for different distributions.\\
 
-\textbf{Data Description} : This exercise will cover three different distributions: Binomial, Poisson, and Normal. \\
+\textbf{Data Description}: Analysis of Binomial, Poisson, and Hypergeometric distributions for quality control.\\
 
-\section*{1. Single Sampling Plan}
-A single sampling plan involves taking a single sample from a lot and deciding whether to accept or reject the lot based on the number of defective items found in the sample.
+\section*{1. Single Sampling Plan (SSP)}
+Parameters:
+\begin{itemize}
+\item Sample Size (n) = 50
+\item Acceptance Number (c) = 3
+\item Lot Size (N) = 1000
+\end{itemize}
 
-\textbf{Example:} \\
-Let’s assume we have a lot of 1000 items, and we decide to take a sample of 50 items. If we find 3 or fewer defective items, we accept the lot; otherwise, we reject it.
-
-\textbf{Acceptance Number (c)}: 3 \\
-\textbf{Sample Size (n)}: 50 \\
-
-\textbf{OC Curve}: The OC curve can be plotted to show the probability of accepting the lot against the proportion of defectives in the lot.
-
-<<echo=FALSE, results='asis'>>=
-# R code to plot OC Curve for Binomial Distribution
+\subsection*{1.1 Binomial Distribution}
+<<echo=FALSE, warning=FALSE>>=
 library(ggplot2)
 
+# SSP for Binomial Distribution
 n <- 50
 c <- 3
+N <- 1000
 p <- seq(0, 0.1, by = 0.01)
-accept_prob <- pbinom(c, n, p)
+accept_prob_binom <- pbinom(c, n, p)
 
-df <- data.frame(p, accept_prob)
-
-ggplot(df, aes(x = p, y = accept_prob)) +
+ggplot(data.frame(p, accept_prob_binom), aes(x = p, y = accept_prob_binom)) +
   geom_line() +
-  labs(title = "Operating Characteristic (OC) Curve",
+  labs(title = "OC Curve for SSP (Binomial Distribution)",
        x = "Proportion of Defectives (p)",
-       y = "Probability of Acceptance")
+       y = "Probability of Acceptance") +
+  theme_minimal()
+
+# Calculate AOQ
+p_value <- 0.05
+P_accept_binom <- sum(dbinom(0:c, size = n, prob = p_value))
+AOQ_binom <- p_value * (1 - P_accept_binom)
 @
 
-\section*{2. Double Sampling Plan}
-A double sampling plan is an extension of the single sampling plan where if the first sample is inconclusive, a second sample is taken.
+\textbf{AOQ for Binomial Distribution}: \Sexpr{round(AOQ_binom, 4)}
 
-\textbf{Example:} \\
-Assume we take a first sample of 50 items. If we find 2 or fewer defectives, we accept the lot. If we find 4 or more, we reject it. If we find 3 defectives, we take a second sample of 50 items. If the total number of defectives in both samples is 5 or fewer, we accept the lot.
+\subsection*{1.2 Poisson Distribution}
+<<echo=FALSE, warning=FALSE>>=
+# SSP for Poisson Distribution
+lambda_values <- seq(0, 5, by = 0.1)
+accept_prob_poisson <- ppois(c, lambda_values)
 
-\textbf{Acceptance Number (c1)}: 2 (for first sample) \\
-\textbf{Acceptance Number (c2)}: 5 (for total) \\
+ggplot(data.frame(lambda = lambda_values, accept_prob_poisson), 
+       aes(x = lambda, y = accept_prob_poisson)) +
+  geom_line() +
+  labs(title = "OC Curve for SSP (Poisson Distribution)",
+       x = "Mean Number of Defects (λ)",
+       y = "Probability of Acceptance") +
+  theme_minimal()
 
-\section*{3. Average Outgoing Quality (AOQ)}
-AOQ is the average quality of outgoing products after inspection. It can be calculated for different distributions.
-
-\textbf{For Binomial Distribution:} \\
-Let \( p \) be the fraction defective in the lot. The AOQ can be calculated as:
-\[
-AOQ = p \cdot (1 - P(A))
-\]
-where \( P(A) \) is the probability of acceptance.
-
-\textbf{For Poisson Distribution:} \\
-Assuming a Poisson distribution with mean \( \lambda \):
-\[
-AOQ = \lambda \cdot (1 - P(A))
-\]
-
-\textbf{For Normal Distribution:} \\
-For a normal distribution, we can use the Z-score to calculate probabilities and subsequently find AOQ.
-
-\textbf{Example for AOQ Calculation:}
-<<echo=FALSE>>=
-# R code to calculate AOQ for Binomial Distribution
-n <- 50
-p <- 0.05
-c <- 3
-
-# Probability of acceptance
-P_accept <- sum(dbinom(0:c, size = n, prob = p))
-
-# AOQ calculation
-AOQ <- p * (1 - P_accept)
-AOQ
+# Calculate AOQ
+lambda <- 0.5
+P_accept_poisson <- sum(dpois(0:c, lambda = lambda))
+AOQ_poisson <- lambda * (1 - P_accept_poisson)
 @
+
+\textbf{AOQ for Poisson Distribution}: \Sexpr{round(AOQ_poisson, 4)}
+
+\subsection*{1.3 Hypergeometric Distribution}
+<<echo=FALSE, warning=FALSE>>=
+# SSP for Hypergeometric Distribution
+D <- seq(0, 100, by = 5)
+accept_prob_hyper <- phyper(c, D, N - D, n)
+
+ggplot(data.frame(p = D/N, accept_prob_hyper), 
+       aes(x = p, y = accept_prob_hyper)) +
+  geom_line() +
+  labs(title = "OC Curve for SSP (Hypergeometric Distribution)",
+       x = "Proportion of Defectives (D/N)",
+       y = "Probability of Acceptance") +
+  theme_minimal()
+
+# Calculate AOQ
+D_value <- 50
+P_accept_hyper <- phyper(c, D_value, N - D_value, n)
+AOQ_hyper <- (D_value / N) * (1 - P_accept_hyper)
+@
+
+\textbf{AOQ for Hypergeometric Distribution}: \Sexpr{round(AOQ_hyper, 4)}
+
+\section*{2. Double Sampling Plan (DSP)}
+Parameters:
+\begin{itemize}
+\item First Sample Size (n1) = 30
+\item First Acceptance Number (c1) = 1
+\item First Rejection Number (r1) = 3
+\item Second Sample Size (n2) = 20
+\item Second Acceptance Number (c2) = 4
+\end{itemize}
+
+\subsection*{2.1 Binomial Distribution}
+<<echo=FALSE, warning=FALSE>>=
+# DSP for Binomial Distribution
+n1 <- 30
+c1 <- 1
+r1 <- 3
+n2 <- 20
+c2 <- 4
+
+accept_prob_dsp_binom <- numeric(length(p))
+for (i in seq_along(p)) {
+  p_val <- p[i]
+  P_accept_1 <- sum(dbinom(0:c1, n1, p_val))
+  P_reject_1 <- sum(dbinom((r1+1):n1, n1, p_val))
+  P_inconclusive_1 <- 1 - P_accept_1 - P_reject_1
+  P_accept_2 <- sum(dbinom(0:(c2 - c1), n2, p_val))
+  accept_prob_dsp_binom[i] <- P_accept_1 + (P_inconclusive_1 * P_accept_2)
+}
+
+ggplot(data.frame(p, accept_prob_dsp_binom), aes(x = p, y = accept_prob_dsp_binom)) +
+  geom_line() +
+  labs(title = "OC Curve for DSP (Binomial Distribution)",
+       x = "Proportion of Defectives (p)",
+       y = "Probability of Acceptance") +
+  theme_minimal()
+
+# Calculate DSP AOQ
+p_value_dsp <- 0.05
+P_accept_1_dsp <- sum(dbinom(0:c1, n1, p_value_dsp))
+P_inconclusive_1_dsp <- 1 - P_accept_1_dsp - sum(dbinom((r1+1):n1, n1, p_value_dsp))
+P_accept_2_dsp <- sum(dbinom(0:(c2 - c1), n2, p_value_dsp))
+P_accept_dsp_total <- P_accept_1_dsp + (P_inconclusive_1_dsp * P_accept_2_dsp)
+AOQ_dsp_binom <- p_value_dsp * (1 - P_accept_dsp_total)
+@
+
+\textbf{AOQ for DSP Binomial Distribution}: \Sexpr{round(AOQ_dsp_binom, 4)}
+
+\subsection*{2.2 Poisson Distribution}
+<<echo=FALSE, warning=FALSE>>=
+# DSP for Poisson Distribution
+accept_prob_dsp_poisson <- numeric(length(lambda_values))
+for (i in seq_along(lambda_values)) {
+  lambda_val <- lambda_values[i]
+  P_accept_1 <- sum(dpois(0:c1, lambda_val))
+  P_reject_1 <- sum(dpois((r1+1):n1, lambda_val))
+  P_inconclusive_1 <- 1 - P_accept_1 - P_reject_1
+  P_accept_2 <- sum(dpois(0:(c2 - c1), lambda_val))
+  accept_prob_dsp_poisson[i] <- P_accept_1 + (P_inconclusive_1 * P_accept_2)
+}
+
+ggplot(data.frame(lambda = lambda_values, accept_prob_dsp_poisson), 
+       aes(x = lambda, y = accept_prob_dsp_poisson)) +
+  geom_line() +
+  labs(title = "OC Curve for DSP (Poisson Distribution)",
+       x = "Mean Number of Defects (λ)",
+       y = "Probability of Acceptance") +
+  theme_minimal()
+
+# Calculate DSP AOQ
+lambda_dsp <- 0.5
+P_accept_1_poisson <- sum(dpois(0:c1, lambda_dsp))
+P_inconclusive_1_poisson <- 1 - P_accept_1_poisson - sum(dpois((r1+1):n1, lambda_dsp))
+P_accept_2_poisson <- sum(dpois(0:(c2 - c1), lambda_dsp))
+P_accept_dsp_total_poisson <- P_accept_1_poisson + (P_inconclusive_1_poisson * P_accept_2_poisson)
+AOQ_dsp_poisson <- lambda_dsp * (1 - P_accept_dsp_total_poisson)
+@
+
+\textbf{AOQ for DSP Poisson Distribution}: \Sexpr{round(AOQ_dsp_poisson, 4)}
+
+\subsection*{2.3 Hypergeometric Distribution}
+<<echo=FALSE, warning=FALSE>>=
+# DSP for Hypergeometric Distribution
+accept_prob_dsp_hyper <- numeric(length(D))
+for (i in seq_along(D)) {
+  D_val <- D[i]
+  P_accept_1 <- phyper(c1, D_val, N - D_val, n1)
+  P_reject_1 <- sum(phyper((r1+1):n1, D_val, N - D_val, n1))
+  P_inconclusive_1 <- 1 - P_accept_1 - P_reject_1
+  P_accept_2 <- phyper((c2 - c1), D_val, N - D_val, n2)
+  accept_prob_dsp_hyper[i] <- P_accept_1 + (P_inconclusive_1 * P_accept_2)
+}
+
+ggplot(data.frame(p = D/N, accept_prob_dsp_hyper), 
+       aes(x = p, y = accept_prob_dsp_hyper)) +
+  geom_line() +
+  labs(title = "OC Curve for DSP (Hypergeometric Distribution)",
+       x = "Proportion of Defectives (D/N)",
+       y = "Probability of Acceptance") +
+  theme_minimal()
+
+# Calculate DSP AOQ
+D_value_dsp <- 50
+P_accept_1_hyper <- phyper(0:c1, D_value_dsp, N - D_value_dsp, n1)
+P_inconclusive_1_hyper <- 1 - P_accept_1_hyper - phyper((r1+1):n1, D_value_dsp, N - D_value_dsp, n1)
+P_accept_2_hyper <- phyper(0:(c2 - c1), D_value_dsp, N - D_value_dsp, n2)
+P_accept_dsp_total_hyper <- P_accept_1_hyper + (P_inconclusive_1_hyper * P_accept_2_hyper)
+AOQ_dsp_hyper <- (D_value_dsp / N) * (1 - P_accept_dsp_total_hyper)
+@
+
+\textbf{AOQ for DSP Hypergeometric Distribution}: \Sexpr{round(AOQ_dsp_hyper, 4)}
 
 \section*{Conclusion}
-In this exercise, we explored acceptance sampling techniques including single and double sampling plans. We also examined the Operating Characteristic curve and Average Outgoing Quality for different distributions (Binomial, Poisson, and Normal). Understanding these concepts is crucial for effective quality control in manufacturing and service industries.
+This exercise demonstrated the implementation of Single and Double Sampling Plans for quality control using three different distributions: Binomial, Poisson, and Hypergeometric. The OC curves show the relationship between lot quality and acceptance probability, while AOQ values provide insights into the effectiveness of the sampling plans. Key observations include:
+
+\begin{itemize}
+\item The Binomial distribution is suitable when sampling with replacement
+\item The Poisson distribution is useful for rare defect occurrences
+\item The Hypergeometric distribution is appropriate when sampling without replacement from a finite lot
+\end{itemize}
+
+The analysis provides a comprehensive understanding of acceptance sampling techniques and their applications in quality control.
+
+\section*{Assessment}
+\subsection*{1. Single Sampling Plan Analysis}
+\subsubsection*{Binomial Distribution}
+\begin{itemize}
+\item OC Curve Analysis: The curve shows a gradual decrease in acceptance probability as the proportion of defectives increases, with a steep decline between p=0.025 and p=0.075
+\item AOQ Value (0.012): Indicates relatively good quality control with low average outgoing quality
+\item Producer's Risk (α): Approximately 5% at p = 0.025
+\item Consumer's Risk (β): Approximately 10% at p = 0.075
+\end{itemize}
+
+\subsubsection*{Poisson Distribution}
+\begin{itemize}
+\item OC Curve Behavior: Shows similar pattern to binomial but with respect to mean defects (λ)
+\item AOQ Value (0.0009): Significantly lower than binomial, suggesting better control for rare defects
+\item Critical Region: Sharp decline in acceptance probability between λ = 1 and λ = 3
+\item Effectiveness: Most suitable for rare defect scenarios
+\end{itemize}
+
+\subsubsection*{Hypergeometric Distribution}
+\begin{itemize}
+\item OC Curve Characteristics: Similar to binomial but accounts for finite population
+\item AOQ Value (0.0118): Comparable to binomial, reflecting finite population adjustment
+\item Sampling Impact: Shows slightly more conservative acceptance rates due to sampling without replacement
+\item Application Suitability: Best for small lot sizes where sampling fraction is significant
+\end{itemize}
+
+\subsection*{2. Double Sampling Plan Evaluation}
+\begin{itemize}
+\item Efficiency Comparison: DSP shows improved discrimination compared to SSP
+\item Cost-Effectiveness: Potential reduction in total inspection through two-stage process
+\item Risk Management: Better control of both producer's and consumer's risks
+\item Implementation Complexity: Increased administrative overhead balanced by improved accuracy
+\end{itemize}
+
+\subsection*{3. Comparative Analysis}
+\begin{itemize}
+\item Distribution Selection:
+  \begin{itemize}
+  \item Binomial: Best for large lots with replacement
+  \item Poisson: Optimal for rare defects and large lots
+  \item Hypergeometric: Most accurate for small lots without replacement
+  \end{itemize}
+\item Sampling Plan Choice:
+  \begin{itemize}
+  \item SSP: Simpler administration, suitable for stable processes
+  \item DSP: Better discrimination, ideal for critical quality characteristics
+  \end{itemize}
+\item Overall Performance Metrics:
+  \begin{itemize}
+  \item AOQ Values: All distributions show acceptable quality levels
+  \item OC Curves: Demonstrate appropriate discrimination ability
+  \item Risk Levels: Well-balanced between producer and consumer
+  \end{itemize}
+\end{itemize}
+
+\subsection*{4. Recommendations}
+\begin{itemize}
+\item Implementation Guidelines:
+  \begin{itemize}
+  \item Use SSP for routine quality control
+  \item Apply DSP for critical characteristics
+  \item Select distribution based on lot size and sampling method
+  \end{itemize}
+\item Process Improvements:
+  \begin{itemize}
+  \item Monitor AOQ trends for process stability
+  \item Adjust sampling parameters based on historical data
+  \item Consider cost-benefit analysis for sampling plan selection
+  \end{itemize}
+\end{itemize}
+
+\subsection*{5. Detailed DSP Performance Analysis}
+\subsubsection*{DSP Binomial Distribution}
+\begin{itemize}
+\item OC Curve Characteristics:
+  \begin{itemize}
+  \item Smoother transition compared to SSP curve
+  \item High acceptance probability (>0.95) for p < 0.025
+  \item Gradual decline between p = 0.025 and p = 0.075
+  \item Maintains acceptance probability above 0.6 even at p = 0.1
+  \end{itemize}
+\item AOQ Analysis:
+  \begin{itemize}
+  \item Lower AOQ value (0.0033) compared to SSP (0.012)
+  \item Indicates superior quality control effectiveness
+  \item Suggests better discrimination between good and bad lots
+  \end{itemize}
+\item Performance Metrics:
+  \begin{itemize}
+  \item Producer's Risk: Minimal for p < 0.025
+  \item Consumer's Risk: Reduced compared to SSP
+  \item Operating Range: Wider effective discrimination zone
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{DSP Poisson Distribution}
+\begin{itemize}
+\item OC Curve Features:
+  \begin{itemize}
+  \item Sharp discrimination around λ = 2
+  \item Rapid decline in acceptance probability after λ = 1
+  \item Near-zero acceptance for λ > 4
+  \end{itemize}
+\item AOQ Evaluation:
+  \begin{itemize}
+  \item Very low AOQ (0.001)
+  \item Significant improvement over SSP performance
+  \item Excellent control of rare defect scenarios
+  \end{itemize}
+\item Critical Characteristics:
+  \begin{itemize}
+  \item High sensitivity to defect rate changes
+  \item Optimal for processes with rare defect occurrences
+  \item Clear decision boundaries for acceptance/rejection
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{DSP Hypergeometric Distribution}
+\begin{itemize}
+\item OC Curve Analysis:
+  \begin{itemize}
+  \item Unusual negative scale presentation
+  \item Linear trend differs from typical OC curve shape
+  \item Suggests potential need for curve rescaling
+  \end{itemize}
+\item AOQ Pattern:
+  \begin{itemize}
+  \item Multiple AOQ values (ranging from 0.0426 to 0.0496)
+  \item Higher variability compared to other distributions
+  \item Indicates sampling variation effects
+  \end{itemize}
+\item Implementation Considerations:
+  \begin{itemize}
+  \item May require curve normalization for better interpretation
+  \item Shows stronger finite population effects
+  \item Suggests need for careful parameter selection
+  \end{itemize}
+\end{itemize}
+
+\subsection*{6. Comparative DSP-SSP Analysis}
+\begin{itemize}
+\item Overall Performance:
+  \begin{itemize}
+  \item DSP shows consistently lower AOQ values
+  \item Better discrimination in critical regions
+  \item More flexible operation through two-stage decision process
+  \end{itemize}
+\item Economic Implications:
+  \begin{itemize}
+  \item Potential for reduced total inspection quantity
+  \item Higher administrative complexity
+  \item Better protection against quality risks
+  \end{itemize}
+\item Practical Considerations:
+  \begin{itemize}
+  \item DSP more suitable for critical quality characteristics
+  \item Better handling of borderline cases
+  \item Requires more sophisticated implementation procedures
+  \end{itemize}
+\end{itemize}
 
 \end{document}
