@@ -2,68 +2,74 @@
 
 \begin{document}
 
-\textbf{Title- Mean Chart and Sigma Chart}\\
+\textbf{Title- U Chart and C Chart}\\
 \textbf{Exercise No. 1}\\
 \textbf{Reg No.} : 23MDT0047\\
-\textbf{Date} : November 10, 2024 \\
-\textbf{Aim} : To Check Mean chart and Sigma Chart of the Paper Data \\
+\textbf{Date} : November 13, 2024 \\
+\textbf{Aim} : To Check U chart and C Chart of the Paper Data \\
 \textbf{Data Description} : Paper Data. It consists of two columns - X and 
 S.No \\
 
 <<>>=
-library(qcc)
+# Load necessary libraries
+library(qicharts2)
 library(readxl)
-
-### USE THIS LINE OF CODE WHILE EXECUTING LINE BY LINE
+# Load the data 
 #df1 <- read_excel("D:Music/SQC/paper_data.xlsx")
-
-### USE THIS LINE OF CODE WHILE MAKING PDF
 df1 <- read_excel("paper_data.xlsx")
-df1 <- qcc.groups(df1$X, df1$S.No)
 
-q1<- qcc(df1, type='xbar', nsigmas=3, plot=TRUE)
-q1
+# C Chart 
+qic(df1$X, 
+    x = 1:nrow(df1),          # Creating a sequence for x-axis based on row number
+    chart = "c",               # Specify c-chart
+    ylab = "Count (X)", 
+    xlab = "Observation Number")
 
-s <- qcc(df1, type = "S", nsigmas = 3, plot = FALSE)
-
-# Set smaller margins
-par(mar = c(5, 4, 4, 2))  # Adjust values as needed
-plot(s)  # Try plotting again
+# U Chart
+qic(df1$X, 
+    n = rep(1, nrow(df1)),    # Sample size for each observation (1 in this case)
+    x = 1:nrow(df1),          # Creating a sequence for x-axis based on row number
+    chart = "u",              # Specify u-chart
+    ylab = "Proportion (X / Sample Size)", 
+    xlab = "Observation Number")
 
 
 @
 \textbf {Conclusion:} \\
-From the X-bar chart, it is evident that all processes are within control. \\
-From the Sigma chart, it is evident that all processes are within control.  \\
+The process can be considered in control, and no immediate changes are necessary. C and U charts. \\
 ------------------------------------------------------------------------------ \\
-\textbf{Title- Mean Chart and Sigma Chart}\\
+\textbf{Title- U Chart and C Chart}\\
 \textbf{Exercise No. 2}\\
 \textbf{Reg No.} : 23MDT0047\\
-\textbf{Date} : November 10, 2024 \\
-\textbf{Aim} : To Check Mean chart and Sigma Chart of the Data 1 \\
-\textbf{Data Description} : Data 1. It consists of two columns - X and S.No\\
+\textbf{Date} : November 13, 2024 \\
+\textbf{Aim} : To Check U chart and C Chart of the Data \\
+\textbf{Data Description} : Paper Data. It consists of two columns - X and 
+S.No \\
 
 <<>>=
-### USE THIS LINE OF CODE WHILE EXECUTING LINE BY LINE
+# Load the data (assuming saved as 'data.csv')
 #df2 <- read_excel("D:Music/SQC/data1.xlsx")
-
-### USE THIS LINE OF CODE WHILE MAKING PDF
 df2 <- read_excel("data1.xlsx")
 
-df2 <- qcc.groups(df2$X, df2$S.No)
+# C Chart 
+qic(df2$X, 
+    x = 1:nrow(df2),          # Creating a sequence for x-axis based on row number
+    chart = "c",               # Specify c-chart
+    ylab = "Count (X)", 
+    xlab = "Observation Number")
 
-q2<- qcc(df2, type='xbar', nsigmas=3, plot=TRUE)
-q2
+# U Chart
+qic(df2$X, 
+    n = rep(1, nrow(df2)),    # Sample size for each observation (1 in this case)
+    x = 1:nrow(df2),          # Creating a sequence for x-axis based on row number
+    chart = "u",              # Specify u-chart
+    ylab = "Proportion (X / Sample Size)", 
+    xlab = "Observation Number")
 
-s2 <- qcc(df2, type = "S", nsigmas = 3, plot = FALSE)
 
-# Set smaller margins
-par(mar = c(5, 4, 4, 2))  # Adjust values as needed
-plot(s2)  # Try plotting again
 
 @
 \textbf {Conclusion:} \\
-From the X-bar chart, it is evident that all processes are within control. \\
-From the Sigma chart, it is evident that all processes are within control.  \\
+The process can be considered in control, and no immediate changes are necessary. C and U charts.\\
 
 \end{document}
