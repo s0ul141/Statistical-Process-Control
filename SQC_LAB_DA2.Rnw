@@ -2,11 +2,11 @@
 
 \begin{document}
 
-\textbf{Title- U Chart and C Chart}\\
+\textbf{Title- C Chart and U Chart}\\
 \textbf{Exercise No. 1}\\
 \textbf{Reg No.} : 23MDT0047\\
 \textbf{Date} : November 13, 2024 \\
-\textbf{Aim} : To Check U chart and C Chart of the Paper Data \\
+\textbf{Aim} : To Check C chart and U Chart of the Paper Data \\
 \textbf{Data Description} : Paper Data. It consists of two columns - X and 
 S.No \\
 
@@ -36,14 +36,14 @@ qic(df1$X,
 
 @
 \textbf {Conclusion:} \\
-The process can be considered in control, and no immediate changes are necessary. C and U charts. \\
+The process can be considered in control, and no immediate changes are necessary based on C and U charts. \\
 ------------------------------------------------------------------------------ \\
-\textbf{Title- U Chart and C Chart}\\
+\textbf{Title- C Chart and U Chart}\\
 \textbf{Exercise No. 2}\\
 \textbf{Reg No.} : 23MDT0047\\
 \textbf{Date} : November 13, 2024 \\
-\textbf{Aim} : To Check U chart and C Chart of the Data \\
-\textbf{Data Description} : Paper Data. It consists of two columns - X and 
+\textbf{Aim} : To Check C chart and U Chart of the Data 1 \\
+\textbf{Data Description} : Data 1. It consists of two columns - X and 
 S.No \\
 
 <<>>=
@@ -70,6 +70,6 @@ qic(df2$X,
 
 @
 \textbf {Conclusion:} \\
-The process can be considered in control, and no immediate changes are necessary. C and U charts.\\
+The process can be considered in control, and no immediate changes are necessary based on C and U charts.\\
 
 \end{document}
