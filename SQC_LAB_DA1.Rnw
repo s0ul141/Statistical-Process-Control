@@ -2,11 +2,11 @@
 
 \begin{document}
 
-\textbf{Title- Mean Chart and Range Chart}\\
+\textbf{Title- Mean Chart, Range Chart and Sigma Chart}\\
 \textbf{Exercise No. 1}\\
 \textbf{Reg No.} : 23MDT0047\\
-\textbf{Date} : November 9, 2024 \\
-\textbf{Aim} : To Check Mean chart and Range Chart of the Paper Data \\
+\textbf{Date} : November 12, 2024 \\
+\textbf{Aim} : To Check Mean chart, Range Chart and Sigma chart of the Paper Data \\
 \textbf{Data Description} : Paper Data. It consists of two columns - X and S.No\\
 
 
@@ -42,11 +42,11 @@ From the X-bar chart, it is evident that all processes are within control. \\
 From the Range chart, it is evident that all processes are within control. \\
 From the Sigma chart, it is evident that all processes are within control. \\
 ------------------------------------------------------------------------------ \\
-\textbf{Title- Mean Chart and Range Chart}\\
+\textbf{Title- Mean Chart, Range Chart and Sigma Chart}\\
 \textbf{Exercise No. 2}\\
 \textbf{Reg No.} : 23MDT0047\\
-\textbf{Date} : November 9, 2024 \\
-\textbf{Aim} : To Check Mean chart and Range Chart of the Paper Data \\
+\textbf{Date} : November 12, 2024 \\
+\textbf{Aim} : To Check Mean Chart, Range Chart and Sigma Chart of the Data 1 \\
 \textbf{Data Description} : Data 1. It consists of two columns - X and S.No\\
 
 <<>>=
